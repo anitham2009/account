@@ -1,0 +1,10 @@
+{
+  "typeId": 2,
+  "type": "Current Account",
+  "isActive": "Y",
+  "createdBy": "System",
+  "createdDate": "2023-04-22T18:30:00.000+00:00",
+  "updatedBy": "System",
+  "updatedDate": "2023-04-22T18:30:00.000+00:00",
+  "account": []
+}

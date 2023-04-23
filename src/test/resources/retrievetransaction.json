@@ -1,0 +1,15 @@
+{
+  "message": "Success",
+  "transaction": [
+    {
+      "transactionId": 3,
+      "transactionNumber": "TXNABCA1682247286488831276525",
+      "accountId": 3,
+      "description": "Initial Credit",
+      "transferredAmount": 10,
+      "balance": 10,
+      "transferredDate": "2023-04-22T18:30:00.000+00:00"
+    }
+  ],
+  "errorMessage": null
+}

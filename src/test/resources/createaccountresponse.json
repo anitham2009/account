@@ -1,0 +1,9 @@
+
+{
+  "status": "Current account created successfully",
+  "successResponse": {
+    "accountNumber": "NL91 ABCB 208313048",
+    "customerId": 1,
+    "transactionNumber": "TXNABCA1682240682545534458192"
+  }
+}

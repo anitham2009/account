@@ -1,0 +1,15 @@
+package com.app.account.exception;
+
+public class CustomerNotExistsException extends RuntimeException{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public CustomerNotExistsException(final String message) {
+		super(message);
+		
+	}
+
+}

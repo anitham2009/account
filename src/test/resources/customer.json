@@ -1,0 +1,17 @@
+{
+	"customerId": 1,
+	"firstName": "Nina",
+	"surname": "John",
+	"customerAddress": {
+		"addressId": 2,
+		"addressLine": "Gelderlandplein 6",
+		"city": "Amsterdam",
+		"state": "North Holland",
+		"country": "Netherlands",
+		"postalCode": "1086 HZ",
+		"createdBy": "System",
+		"createdDate": "2023-04-22T18:30:00.000+00:00",
+		"updatedBy": "System",
+		"updatedDate": "2023-04-22T18:30:00.000+00:00"
+	}
+}
