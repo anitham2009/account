@@ -53,5 +53,5 @@ stages:
         connectionType: 'kubernetesServiceConnection'
         kubernetesServiceConnection: 'azure-kubernetes-service-connection'
         namespace: 'default'
-        manifests: '$(System.ArtifactsDirectory)//configuration/kubernetes/deployment.yaml'
+        manifests: '$(System.ArtifactsDirectory)/configuration/kubernetes/deployment.yaml'
         containers: 'anithait/account-service:$(tag)'
