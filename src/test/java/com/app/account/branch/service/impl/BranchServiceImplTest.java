@@ -35,7 +35,27 @@ public class BranchServiceImplTest {
 		Branch branch = (Branch) retrieveObject(BRANCH_FILE, Branch.class);
 		when(branchRepository.findByIsActive(any())).thenReturn(branch);
 		Branch branchResponse =  branchService.retrieveBranch();
-		assertNotNull(branchResponse);
+		assertNotNull(branchResponse.getBranchId());
+		assertNotNull(branchResponse.getBranchAddress());
+		assertNotNull(branchResponse.getBranchName());
+		assertNotNull(branchResponse.getIsActive());
+		assertNotNull(branchResponse.getCreatedBy());
+		assertNotNull(branchResponse.getUpdatedBy());
+		assertNotNull(branchResponse.getUpdatedDate());
+		assertNotNull(branchResponse.getCreatedDate());
+		assertNotNull(branchResponse.getAccount());
+		assertNotNull(branchResponse.getBranchAddress().getAddressId());
+		assertNotNull(branchResponse.getBranchAddress().getAddressLine());
+		assertNotNull(branchResponse.getBranchAddress().getCity());
+		assertNotNull(branchResponse.getBranchAddress().getState());
+		assertNotNull(branchResponse.getBranchAddress().getCountry());
+		assertNotNull(branchResponse.getBranchAddress().getCreatedBy());
+		assertNotNull(branchResponse.getBranchAddress().getCreatedDate());
+		assertNotNull(branchResponse.getBranchAddress().getUpdatedBy());
+		assertNotNull(branchResponse.getBranchAddress().getUpdatedDate());
+		assertNotNull(branchResponse.getBranchAddress().getPostalCode());
+		
+		
 	}
 	
 	<T> Object retrieveObject(String fileName, Class<T> contentClass)

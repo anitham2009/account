@@ -23,8 +23,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder(toBuilder = true)
 public class Address {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

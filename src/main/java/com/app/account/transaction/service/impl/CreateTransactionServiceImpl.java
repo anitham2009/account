@@ -24,11 +24,15 @@ public class CreateTransactionServiceImpl implements ICreateTransactionService {
 	@Value("${transaction.service.url}")
 	String transactionServiceUrl;
 	
+	@Value("${spring.profiles.active}")
+	String activeProfile;
+	
 	@Override
 	public TransactionResponse saveTransaction(Account account, BigDecimal creditAmount) {
 		// Save Transaction
 		TransactionResponse transactionResponse;
 		try {
+			System.out.println("Active Profile"+transactionServiceUrl);
 			// Form Transaction input
 			TransactionRequest transactionRequestData = formTransactionRequestData(account, creditAmount);
 		    transactionResponse = restTemplate.postForObject(transactionServiceUrl,transactionRequestData,TransactionResponse.class);

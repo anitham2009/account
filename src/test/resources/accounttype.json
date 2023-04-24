@@ -6,5 +6,11 @@
   "createdDate": "2023-04-22T18:30:00.000+00:00",
   "updatedBy": "System",
   "updatedDate": "2023-04-22T18:30:00.000+00:00",
-  "account": []
+  "account": [
+	{
+	"accountId": 3,
+	"accountNumber": "NL91 ABCB 208313048",
+	"balance" :10
+	}
+]
 }

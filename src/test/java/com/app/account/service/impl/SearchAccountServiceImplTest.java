@@ -1,6 +1,7 @@
 package com.app.account.service.impl;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -59,6 +60,20 @@ public class SearchAccountServiceImplTest {
 	public static final String ERROR_TXN_RESPONE_FILE = "errortransactonresponse.json";
 	public static final String INVALID_CUSTOMER_INPUT_FILE = "invalidcustomerrequest.json";
 
+	@DisplayName("Success")
+	@Test
+	public void testgetAccountDetail() throws IOException {
+		Account account = (Account) retrieveObject(ACCOUNT_FILE, Account.class);
+		when(accountRepository.findAccountByTypeIdAndCustomerId(any(),any())).thenReturn(account);
+		Account response = searchAccountService.retrieveCustomerAccountByType(2L,1L);
+		assertNotNull(response);
+		assertNotNull(response.getAccountStatus());
+		assertNotNull(response.getCreatedBy());
+		assertNotNull(response.getUpdatedBy());
+		assertNotNull(response.getOpenDate());
+		assertNotNull(response.getUpdatedDate());
+		assertNotNull(response.getBranch());
+	}
 	@DisplayName("Success")
 	@Test
 	public void testSearchAccount() throws IOException {

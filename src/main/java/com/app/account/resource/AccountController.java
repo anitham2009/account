@@ -74,34 +74,6 @@ public class AccountController {
 	
 	@Autowired
 	IAccountTypeRepository acty;
-	
-	@GetMapping(value ="/customer", produces = MediaType.APPLICATION_JSON_VALUE )
-	public ResponseEntity<Customer> imHealthy0() {
-		//Account account = accountrep.findAccountByTypeIdAndCustomerId(2L, 1L);
-		Customer account = customerRepsitory.findByCustomerIdAndIsActive(1L, "Y");
-		return new ResponseEntity<Customer>(account,HttpStatus.OK);
-	}
-	
-	@GetMapping(value ="/branch" , produces = MediaType.APPLICATION_JSON_VALUE)
-	public Branch imHealthy1() {
-		//Account account = accountrep.findAccountByTypeIdAndCustomerId(2L, 1L);
-		Branch account = branchRepository.findByIsActive("Y");
-		return account;
-	}
-	@GetMapping(value ="/accounttype" , produces = MediaType.APPLICATION_JSON_VALUE)
-	public AccountType imHealthy2() {
-		//Account account = accountrep.findAccountByTypeIdAndCustomerId(2L, 1L);
-		AccountType account = acty.findByTypeAndIsActive("Current Account","Y");
-		return account;
-	}
-	
-
-	@GetMapping(value ="/account",produces = MediaType.APPLICATION_JSON_VALUE )
-	public Account imHealthy() {
-		Account account = accountrep.findAccountByTypeIdAndCustomerId(2L, 1L);
-		return account;
-	}
-	
 
 	@ApiOperation(value = "Create Current Account")
 	@ApiResponses(value = {
@@ -116,39 +88,11 @@ public class AccountController {
             content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal Server Error",
             content = @Content)})
-	@PostMapping
+	@PostMapping(consumes = "application/json", produces="application/json")
 	public ResponseEntity<CreateAccountResponse> createNewAccount(@Valid @RequestBody CreateAccountRequest createAccountDTO) {
 		CreateAccountResponse response = createAccountService.createNewAccount(createAccountDTO);
 		return new ResponseEntity<CreateAccountResponse>(response, HttpStatus.CREATED);
 	}
-	
-	/*
-	 * @ApiOperation(value = "Create Current Account")
-	 * 
-	 * @ApiResponses(value = {
-	 * 
-	 * @ApiResponse(responseCode = "200", description = "Success", content =
-	 * {@Content(mediaType = "application/json", schema = @Schema(implementation =
-	 * CreateAccountResponse.class))}),
-	 * 
-	 * @ApiResponse(responseCode = "409", description = "Account Exists Exception",
-	 * content = @Content),
-	 * 
-	 * @ApiResponse(responseCode = "422", description = "API Client Exception",
-	 * content = @Content),
-	 * 
-	 * @ApiResponse(responseCode = "404", description =
-	 * "Customer Not Exists Exception", content = @Content),
-	 * 
-	 * @ApiResponse(responseCode = "500", description = "Internal Server Error",
-	 * content = @Content)})
-	 * 
-	 * @PostMapping("/newAccount") public ResponseEntity<TransactionResponse>
-	 * createNewAccountMock(@Valid @RequestBody CreateAccountRequest
-	 * createAccountDTO) { TransactionResponse response =
-	 * createAccountService.createNewAccountMock(createAccountDTO); return new
-	 * ResponseEntity<TransactionResponse>(response, HttpStatus.CREATED); }
-	 */
 	
 	@ApiOperation(value = "Get Current Account")
 	@GetMapping(value = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)

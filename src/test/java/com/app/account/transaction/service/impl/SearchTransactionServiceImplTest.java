@@ -41,7 +41,7 @@ public class SearchTransactionServiceImplTest {
 		TransactionResponse transactionResponse = (TransactionResponse) retrieveObject(TRANSACTION_RESPONSE_FILE,
 				TransactionResponse.class);
 		ReflectionTestUtils.setField(searchTransactionService, "transactionServiceUrl",
-				"http://localhost:8004/transaction");
+				"http://transaction:8004/transaction");
 
 		when(restTemplate.getForObject(anyString(), eq(TransactionResponse.class))).thenReturn(transactionResponse);
 		TransactionResponse successResponse = Assertions

@@ -36,6 +36,15 @@ public class CustomerServiceImplTest {
 		when(customerRepository.findByCustomerIdAndIsActive(any(), any())).thenReturn(customer);
 		Customer customerResponse = customerService.retreiveCustomerById(1L);
 		assertNotNull(customerResponse);
+		assertNotNull(customerResponse.getContactNumber());
+		assertNotNull(customerResponse.getGender());
+		assertNotNull(customerResponse.getDateOfBirth());
+		assertNotNull(customerResponse.getIsActive());
+		assertNotNull(customerResponse.getCreatedBy());
+		assertNotNull(customerResponse.getUpdatedBy());
+		assertNotNull(customerResponse.getUpdatedDate());
+		assertNotNull(customerResponse.getCreatedDate());
+		assertNotNull(customerResponse.getCustomerAddress());
 	}
 	
 	<T> Object retrieveObject(String fileName, Class<T> contentClass)

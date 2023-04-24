@@ -1,6 +1,11 @@
 {
 	"branchId": 1,
 	"branchName": "ABC Bank",
+	"isActive": "Y",
+	"createdBy": "System",
+	"createdDate": "2023-04-22T18:30:00.000+00:00",
+	"updatedBy": "System",
+	"updatedDate": "2023-04-22T18:30:00.000+00:00",
 	"branchAddress": {
 		"addressId": 1,
 		"addressLine": "Stadsplein 6",
@@ -13,5 +18,12 @@
 		"updatedBy": "System",
 		"updatedDate": "2023-04-22T18:30:00.000+00:00",
 		"customer": []
-	}
+	},
+	"account":[
+		{
+			"accountId": 3,
+		"accountNumber": "NL91 ABCB 208313048",
+		"balance" :10
+		}
+	]
 }

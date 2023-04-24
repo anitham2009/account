@@ -49,7 +49,7 @@ public class CreateTransactionServiceImplTest {
 		Account account = (Account) retrieveObject(ACCOUNT_FILE, Account.class);
 		TransactionResponse transactionResponse = (TransactionResponse) retrieveObject(TRANSACTION_RESPONSE_FILE,
 				TransactionResponse.class);
-		ReflectionTestUtils.setField(createTransactionService, "transactionServiceUrl", "http://localhost:8004/transaction");
+		ReflectionTestUtils.setField(createTransactionService, "transactionServiceUrl", "http://transaction:8004/transaction");
 		
 		  when(restTemplate.postForObject(anyString(),any(Object.class),eq(TransactionResponse.class)))
           .thenReturn(transactionResponse);
