@@ -7,12 +7,15 @@ import org.springframework.stereotype.Repository;
 
 import com.app.account.entity.Account;
 
+/**
+ * Repository class for Account
+ * @author Anitha Manoharan
+ *
+ */
 @Repository
 public interface IAccountRepository extends JpaRepository<Account, Long>{
-	
+	// Get account detail by account type and customer id.
 	@Query(value = "select a.* from account a inner join account_type at on a.type_id=at.type_id inner join customer c on c.customer_id=a.customer_id where at.type_id=:typeId and c.customer_id=:customerId",nativeQuery = true)
 	public Account findAccountByTypeIdAndCustomerId(@Param("typeId") Long typeId, @Param("customerId") Long customerId);
 
-	//@Query(value = "select * from account where customer_id = :customerId", nativeQuery=true)
-	//public Account findAccountByCustomerId(Long customerId);
 }

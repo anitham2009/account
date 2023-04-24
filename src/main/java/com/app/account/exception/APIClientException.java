@@ -2,7 +2,11 @@ package com.app.account.exception;
 
 import lombok.Getter;
 import lombok.Setter;
-
+/**
+ * Custom APIClientException created to set the error details return from Transaction Service.
+ * @author Anitha Manoharan
+ *
+ */
 @Getter
 @Setter
 public class APIClientException   extends RuntimeException {

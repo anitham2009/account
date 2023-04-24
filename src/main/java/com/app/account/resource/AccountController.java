@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,10 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.account.accounttype.repository.IAccountTypeRepository;
 import com.app.account.branch.repository.IBranchRepository;
 import com.app.account.customer.repository.ICustomerRepository;
-import com.app.account.entity.Account;
-import com.app.account.entity.AccountType;
-import com.app.account.entity.Branch;
-import com.app.account.entity.Customer;
 import com.app.account.exception.APIClientException;
 import com.app.account.exception.AccountExistsException;
 import com.app.account.exception.AccountNotExistsException;
@@ -49,12 +47,18 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
+/**
+ * This class is used to invoke method to save account and its transaction and 
+ * retrieves customer account details.
+ * @author Anitha Manoharan
+ *
+ */
 @RestController
 @RequestMapping("/account")
 @Api(value = "/account", tags = "Account Resource")
 public class AccountController {
 
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
 
 	@Autowired
 	ICreateAccountService createAccountService;
@@ -75,6 +79,13 @@ public class AccountController {
 	@Autowired
 	IAccountTypeRepository acty;
 
+	/**
+	 * Creates new Current Account for the given customer and store its transaction based upon 
+	 * initialCredit amount.
+	 * Invokes transaction service to save transactions.
+	 * @param createAccountRequest
+	 * @return ResponseEntity<CreateAccountResponse>
+	 */
 	@ApiOperation(value = "Create Current Account")
 	@ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success",
@@ -89,14 +100,23 @@ public class AccountController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error",
             content = @Content)})
 	@PostMapping(consumes = "application/json", produces="application/json")
-	public ResponseEntity<CreateAccountResponse> createNewAccount(@Valid @RequestBody CreateAccountRequest createAccountDTO) {
-		CreateAccountResponse response = createAccountService.createNewAccount(createAccountDTO);
+	public ResponseEntity<CreateAccountResponse> createNewAccount(@Valid @RequestBody CreateAccountRequest createAccountRequest) {
+		CreateAccountResponse response = createAccountService.createNewAccount(createAccountRequest);
+		LOGGER.debug("Inside createNewAccount method", this.getClass());
 		return new ResponseEntity<CreateAccountResponse>(response, HttpStatus.CREATED);
 	}
 	
+	/**
+	 * Get customer, current account and transaction details for the given customer.
+	 * It retrieves current account details. 
+	 * Invokes transaction service to get transaction details.
+	 * @param customerId customer Id
+	 * @return ResponseEntity<SearchAccountResponse>
+	 */
 	@ApiOperation(value = "Get Current Account")
 	@GetMapping(value = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SearchAccountResponse> getUserAccountInfo(@ApiParam(example="1") @PathVariable(value="customerId") Long customerId) {
+		LOGGER.debug("Inside getUserAccountInfo method", this.getClass());
 		SearchAccountResponse response = searchAccountService.getCustomerCurrentAccountDetail(customerId);
 		return new ResponseEntity<SearchAccountResponse>(response, HttpStatus.OK);
 	}
@@ -140,7 +160,7 @@ public class AccountController {
 	/**
 	 * Handles Internal server error.
 	 * 
-	 * @param ex Exception
+	 * @param ex APIClientException
 	 * @return ErrorResponse
 	 */
 	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
@@ -154,7 +174,7 @@ public class AccountController {
 	/**
 	 * Handle Account exists exception
 	 * 
-	 * @param ex RecipeNotFoundException
+	 * @param ex AccountExistsException
 	 * @return ErrorResponse
 	 */
 	@ResponseStatus(HttpStatus.CONFLICT)
@@ -168,7 +188,7 @@ public class AccountController {
 	/**
 	 * Handle Customer not exists exception
 	 * 
-	 * @param ex RecipeNotFoundException
+	 * @param ex CustomerNotExistsException
 	 * @return ErrorResponse
 	 */
 	@ResponseStatus(HttpStatus.NOT_FOUND)
@@ -182,7 +202,7 @@ public class AccountController {
 	/**
 	 * Handle Account not exists exception
 	 * 
-	 * @param ex RecipeNotFoundException
+	 * @param ex AccountNotExistsException
 	 * @return ErrorResponse
 	 */
 	@ResponseStatus(HttpStatus.NOT_FOUND)

@@ -5,6 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import com.app.account.entity.AccountType;
 
+/**
+ * This class is used to do database operations of AccountType
+ * @author Anitha Manoharan
+ *
+ */
 @Repository
 public interface IAccountTypeRepository extends JpaRepository<AccountType, Long>{
 

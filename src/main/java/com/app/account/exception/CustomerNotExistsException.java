@@ -1,5 +1,10 @@
 package com.app.account.exception;
 
+/**
+ * Custom CustomerNotExistsException
+ * @author Anitha Manoharan
+ *
+ */
 public class CustomerNotExistsException extends RuntimeException{
 
 	/**

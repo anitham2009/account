@@ -1,5 +1,9 @@
 package com.app.account.exception;
-
+/**
+ * Custom AccountExistsException.
+ * @author Anitha Manoharan
+ *
+ */
 public class AccountExistsException extends RuntimeException {
 
 	/**

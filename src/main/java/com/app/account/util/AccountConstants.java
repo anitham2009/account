@@ -1,5 +1,10 @@
 package com.app.account.util;
 
+/**
+ * This class has all common constants used in this service.
+ * @author Anitha Manoharan
+ *
+ */
 public class AccountConstants {
 
 	public static final String CUSTOMER_NOT_EXISTS = "Customer does not exists";
@@ -27,4 +32,5 @@ public class AccountConstants {
 	public static final int STATUS_CODE_400 = 400;
 	public static final String EMPTY_STRING = "";
 	public static final String SLASH = "/";
+	public static final String Y = "Y";
 }

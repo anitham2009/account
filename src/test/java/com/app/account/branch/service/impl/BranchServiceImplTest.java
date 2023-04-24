@@ -4,9 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import java.io.File;
-import java.io.IOException;
-
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,10 +13,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.app.account.branch.repository.IBranchRepository;
 import com.app.account.entity.Branch;
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.app.account.util.CommonConstants;
+import com.app.account.util.CommonUtil;
 
+/**
+ * Test BranchServiceImpl class
+ * @author Anitha Manoharan
+ *
+ */
 @ExtendWith(MockitoExtension.class)
 public class BranchServiceImplTest {
 	@Mock
@@ -27,12 +29,12 @@ public class BranchServiceImplTest {
 	@InjectMocks
 	BranchServiceImpl branchService;
 	
-	public static final String BASE_FILE_PATH = "src/test/resources/";
-	public static final String BRANCH_FILE = "branch.json";
+
 	
+	@DisplayName("Get branch details")
 	@Test
 	public void testRetrieveBranch() throws Exception {
-		Branch branch = (Branch) retrieveObject(BRANCH_FILE, Branch.class);
+		Branch branch = (Branch) CommonUtil.retrieveObject(CommonConstants.BRANCH_FILE, Branch.class);
 		when(branchRepository.findByIsActive(any())).thenReturn(branch);
 		Branch branchResponse =  branchService.retrieveBranch();
 		assertNotNull(branchResponse.getBranchId());
@@ -58,13 +60,6 @@ public class BranchServiceImplTest {
 		
 	}
 	
-	<T> Object retrieveObject(String fileName, Class<T> contentClass)
-			throws StreamReadException, DatabindException, IOException {
-		File file = new File(BASE_FILE_PATH + fileName);
-		ObjectMapper mapper = new ObjectMapper();
-		Object object = mapper.readValue(file, contentClass);
-		return object;
-
-	}
+	
 
 }

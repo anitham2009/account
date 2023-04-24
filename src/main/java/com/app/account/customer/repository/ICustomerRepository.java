@@ -5,6 +5,12 @@ import org.springframework.stereotype.Repository;
 
 import com.app.account.entity.Customer;
 
+/**
+ * Customer object repository.
+ * Used to do database operations of Customer.
+ * @author Anitha Manoharan
+ *
+ */
 @Repository
 public interface ICustomerRepository extends JpaRepository<Customer, Long>{
 	

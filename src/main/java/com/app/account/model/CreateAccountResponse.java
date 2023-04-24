@@ -14,5 +14,4 @@ import lombok.Setter;
 public class CreateAccountResponse {
 	private String status;
 	private SuccessResponse successResponse;
-//	private ErrorResponse errorResponse;
 }
