@@ -39,6 +39,7 @@ import com.app.account.service.intf.ICreateAccountService;
 import com.app.account.service.intf.ISearchAccountService;
 import com.app.account.util.AccountConstants;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -100,6 +101,7 @@ public class AccountController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error",
             content = @Content)})
 	@PostMapping(consumes = "application/json", produces="application/json")
+	@CircuitBreaker(name = "CircuitBreakerService")
 	public ResponseEntity<CreateAccountResponse> createNewAccount(@Valid @RequestBody CreateAccountRequest createAccountRequest) {
 		CreateAccountResponse response = createAccountService.createNewAccount(createAccountRequest);
 		LOGGER.debug("Inside createNewAccount method", this.getClass());
@@ -115,6 +117,7 @@ public class AccountController {
 	 */
 	@ApiOperation(value = "Get Current Account")
 	@GetMapping(value = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@CircuitBreaker(name = "CircuitBreakerService")
 	public ResponseEntity<SearchAccountResponse> getUserAccountInfo(@ApiParam(example="1") @PathVariable(value="customerId") Long customerId) {
 		LOGGER.debug("Inside getUserAccountInfo method", this.getClass());
 		SearchAccountResponse response = searchAccountService.getCustomerCurrentAccountDetail(customerId);
@@ -163,7 +166,7 @@ public class AccountController {
 	 * @param ex APIClientException
 	 * @return ErrorResponse
 	 */
-	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+	@ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
 	@ExceptionHandler(APIClientException.class)
 	public ErrorResponse handleAPIClientException(APIClientException ex) {
 		ErrorResponse errorResponse = ErrorResponse.builder().errorMessage(ex.getMessage()).statusCode(ex.getStatus()).source(ex.getSource()).build();

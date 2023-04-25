@@ -51,7 +51,7 @@ public class CreateTransactionServiceImpl implements ICreateTransactionService {
 			LOGGER.info("Received response from transaction service {}", this.getClass());
 		} catch (Exception e) {
 			LOGGER.error("Error while processing save transaction {}", this.getClass());
-			transactionResponse = TransactionErrorResponse.formErrorMessage(e.getMessage(), AccountConstants.STATUS_CODE_422);
+			transactionResponse = TransactionErrorResponse.formErrorMessage(e.getMessage(), AccountConstants.STATUS_CODE_503);
 		}
 		return transactionResponse;
 	}

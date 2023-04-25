@@ -3,7 +3,6 @@ package com.app.account.resource;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -14,11 +13,12 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,8 +26,12 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.app.account.model.ErrorResponse;
 import com.app.account.util.CommonConstants;
 import com.app.account.util.CommonUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 
 /**
  * Integration test of account application.
@@ -39,12 +43,20 @@ import com.app.account.util.CommonUtil;
 @TestPropertySource(value = "classpath:application-test.properties")
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
-@AutoConfigureWireMock(port = 8004)
 @TestMethodOrder(OrderAnnotation.class)
 public class AccountControllerIntegrationTest {
 
+
+    @RegisterExtension
+    static WireMockExtension EXTERNAL_SERVICE = WireMockExtension.newInstance()
+        .options(WireMockConfiguration.wireMockConfig()
+            .port(8004))
+        .build(); 
 	@Autowired
 	private MockMvc mockMvc;
+
+	@Mock
+	AccountController accountController;
 
 	@DisplayName("Account not exists exception")
 	@Test
@@ -64,7 +76,7 @@ public class AccountControllerIntegrationTest {
 
 		String inputRequest = CommonUtil.readJSONFile(
 				CommonConstants.BASE_FILE_PATH + CommonConstants.CREATE_ACCOUNT_REQUEST_INITIAL_CREDIT_FILE);
-		stubFor(post(urlEqualTo(CommonConstants.TRANSACTION_URL)).willReturn(aResponse()
+		EXTERNAL_SERVICE.stubFor(post(urlEqualTo(CommonConstants.TRANSACTION_URL)).willReturn(aResponse()
 				.withHeader(CommonConstants.CONTENT_TYPE, CommonConstants.APPLICATION_JSON).withBody(response)));
 		Thread.sleep(1000);
 		RequestBuilder request = MockMvcRequestBuilders.post(CommonConstants.ACCOUNT_URL)
@@ -106,7 +118,7 @@ public class AccountControllerIntegrationTest {
 
 		String inputRequest = CommonUtil.readJSONFile(
 				CommonConstants.BASE_FILE_PATH + CommonConstants.CREATE_ACCOUNT_REQUEST_INITIAL_CREDIT_FILE);
-		stubFor(post(urlEqualTo(CommonConstants.TRANSACTION_URL)).willReturn(aResponse()
+		EXTERNAL_SERVICE.stubFor(post(urlEqualTo(CommonConstants.TRANSACTION_URL)).willReturn(aResponse()
 				.withHeader(CommonConstants.CONTENT_TYPE, CommonConstants.APPLICATION_JSON).withBody(response)));
 		Thread.sleep(1000);
 		RequestBuilder request = MockMvcRequestBuilders.post(CommonConstants.ACCOUNT_URL)
@@ -124,7 +136,7 @@ public class AccountControllerIntegrationTest {
 
 		String inputRequest = CommonUtil.readJSONFile(
 				CommonConstants.BASE_FILE_PATH + CommonConstants.CREATE_ACCOUNT_REQUEST_INITIAL_CREDIT_FILE);
-		stubFor(get(urlEqualTo(CommonConstants.GET_TRANSACTION_URL)).willReturn(aResponse()
+		EXTERNAL_SERVICE.stubFor(get(urlEqualTo(CommonConstants.GET_TRANSACTION_URL)).willReturn(aResponse()
 				.withHeader(CommonConstants.CONTENT_TYPE, CommonConstants.APPLICATION_JSON).withBody(response)));
 		Thread.sleep(1000);
 		RequestBuilder request = MockMvcRequestBuilders.get(CommonConstants.GET_ACCOUNT_URL)
@@ -141,24 +153,22 @@ public class AccountControllerIntegrationTest {
 		RequestBuilder request = MockMvcRequestBuilders.post(CommonConstants.ACCOUNT_URL)
 				.contentType(MediaType.APPLICATION_JSON).content(inputRequest).accept(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(request).andExpect(status().is5xxServerError()).andReturn();
-		assertNotNull(result.getResponse());
+		String response  = result.getResponse().getContentAsString();
+		ObjectMapper mapper = new ObjectMapper();
+		ErrorResponse errorResponse = mapper.readValue(response, ErrorResponse.class);
+		assertNotNull(errorResponse);
 	}
 
-	@DisplayName("Error response from Transaction service")
+	@DisplayName("Error connecting Transaction service")
 	@Test
 	@Order(8)
 	public void testErrorTransaction() throws Exception {
-		String response = CommonUtil
-				.readJSONFile(CommonConstants.BASE_FILE_PATH + CommonConstants.ERROR_TRANSACTION_RESPONSE_FILE);
-
 		String inputRequest = CommonUtil.readJSONFile(
 				CommonConstants.BASE_FILE_PATH + CommonConstants.CREATE_ACCOUNT_REQUEST_INITIAL_CREDIT_FILE);
-		stubFor(get(urlEqualTo(CommonConstants.GET_TRANSACTION_URL)).willReturn(aResponse()
-				.withHeader(CommonConstants.CONTENT_TYPE, CommonConstants.APPLICATION_JSON).withBody(response)));
-		Thread.sleep(1000);
+		
 		RequestBuilder request = MockMvcRequestBuilders.get(CommonConstants.GET_ACCOUNT_URL)
 				.contentType(MediaType.APPLICATION_JSON).content(inputRequest).accept(MediaType.APPLICATION_JSON);
-		MvcResult result = mockMvc.perform(request).andExpect(status().is4xxClientError()).andReturn();
+		MvcResult result = mockMvc.perform(request).andExpect(status().is5xxServerError()).andReturn();
 		assertNotNull(result.getResponse());
 	}
 

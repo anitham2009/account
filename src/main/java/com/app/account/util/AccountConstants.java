@@ -29,6 +29,7 @@ public class AccountConstants {
 	public static final int STATUS_CODE_404 = 404;
 	public static final int STATUS_CODE_409 = 409;
 	public static final int STATUS_CODE_500 = 500;
+	public static final int STATUS_CODE_503 = 503;
 	public static final int STATUS_CODE_400 = 400;
 	public static final String EMPTY_STRING = "";
 	public static final String SLASH = "/";

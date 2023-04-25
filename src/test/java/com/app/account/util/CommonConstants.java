@@ -27,7 +27,7 @@ public class CommonConstants {
 	public static final String FAILURE = "Failure";
 	public static final String TRANSACTION_SERVICE_URL_NAME = "transactionServiceUrl";
 	public static final String TRANSACTION_SERVICE_URL = "http://transaction:8004/transaction";
-	
+	public static final String CIRCUIT_BREAKER_MSG = "CircuitBreaker 'CircuitBreakerService' is OPEN and does not permit further calls";
 	
 	
 
