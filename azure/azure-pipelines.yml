@@ -5,7 +5,7 @@ resources:
 - repo: self
 
 variables:
-  tag: 97
+  tag: '$(Build.BuildId)'
 
 stages:
 - stage: Build
@@ -16,13 +16,13 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    #- task: Docker@2
-    #  inputs:
-    #    containerRegistry: 'anithait'
-    #    repository: 'anithait/account-service'
-     #   command: 'buildAndPush'
-    #    Dockerfile: '**/Dockerfile'
-    #    tags: '$(tag)'
+    - task: Docker@2
+      inputs:
+          containerRegistry: 'anithait'
+          repository: 'anithait/account-service'
+          command: 'buildAndPush'
+          Dockerfile: '**/Dockerfile'
+          tags: '$(tag)'
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(System.DefaultWorkingDirectory)'
