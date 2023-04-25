@@ -10,21 +10,21 @@
 - Database H2
 
 ## Architectural Design
-![Architectural Design](images/ERDiagram.png)
+![Architectural Design](images/ArchDesign.png)
+## Work Flow
+![Work Flow](images/workflow.png)
 
 ## Entity Relationship Diagram
-![Code Coverage](images/RecipeServiceERD.png)
+![Entity Relationship Diagram](images/ERDiagram.png)
 
 ## Code Coverage
-![Entity Relationship Diagram](images/codecoverage.png)
+![Code Coverage](images/codecoverage.png)
 
-## Application Running Instructions
+## Application Running Instructions - Both account service, transaction service
  
   - How to run application in local
     - mvn clean install
     - mvn spring-boot:run
-  - Run jar using below command
-  	- java -jar <jar-location>\account-1.0.jar
   - Run application using CI/CD pipeline
   	- Create one Kubernete cluster in Microsoft azure account
   		- Resource group name :  kubernetes-rg
