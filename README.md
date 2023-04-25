@@ -35,10 +35,10 @@
   			- ![Resource](images/kubernetesvcconnection.png) 			
   		- Create Service connection for git repository to run pipeline
   		- Create Service connection for Docker registry to push image into registry
-  			- Replace with your docker registry name in configuration/azure/account-pipeline.yml in Line No. 21,22
-  			- Replace with your docker registry name in configuration/azure/deployment.yaml in Line No. 25
+  			- Replace with your docker registry name account, transaction service in configuration/azure/account-pipeline.yml , transaction-pipeline.yml in Line No. 21,22
+  			- Replace with your docker registry name account, transaction service in configuration/azure/deployment.yaml in Line No. 25
   		- To Create New Pipeline of transaction service in azure 
-  		     Pipeline -> New Pipeline -> Select GitHub-> select transaction repository-> Select Use Existing Azure Pipeline YAML->select configuration/azure/account-pipeline.yml -> Run
+  		     Pipeline -> New Pipeline -> Select GitHub-> select transaction repository-> Select Use Existing Azure Pipeline YAML->select configuration/azure/transaction-pipeline.yml -> Run
   		   		- You can see status of the pipeline
   		    	- ![Resource](images/transactionpipelinesuccess.png)  
   		- To Create New Pipeline of account service in azure 
