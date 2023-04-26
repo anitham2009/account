@@ -1,6 +1,7 @@
 # Account Service API overview
 - Account service application is to create new current with initial credit amount and store its transaction based upon initial credit amount, view the stored data.
 - Handled operations : create,get newly created current account. Delete newly current account if relevant accounts transaction fails.
+- Build and deploy application using CI/CD pipeline in Azure Kubernetes Cluster
 
 ## Technology Stack
 - Java 11
@@ -11,8 +12,8 @@
 
 ## Architectural Design
 ![Architectural Design](images/ArchDesign.png)
-## Work Flow
-![Work Flow](images/workflow.png)
+## CI/CD Flow
+![CI/CD Flow](images/cicdflow.png)
 
 ## Entity Relationship Diagram
 ![Entity Relationship Diagram](images/ERDiagram.png)
@@ -54,6 +55,10 @@
 			- Copy the ip address of account service in EXTERNAL-IP and port 8003
 				- URL sample: http://20.85.249.179:8004/swagger-ui/
 				- ![Resource](images/transactionresource.png)
+			- To check log execute below command 
+				- kubectl get pods
+				- kubectl logs -f <podnameofaccount/transaction>
+				
 		- Its mandatory to run both account, transaction service to do create/ get operation
   			- Customer Id available are 1 , 2
   			- Create new account of customer id : 1 with initial credit some amount
@@ -61,25 +66,33 @@
   			- Create new account with initial credit 0
   			- Get current of the customer 1
   				- ![Resource](images/getaccountdetailsuccess.png)
-  			 		      	
+  				
+## Monitoring application - Actuator
+	- URL example:
+		- http://20.85.249.179:8004/actuator/health
+		- http://20.84.12.77:8003/actuator/health
+	 		      	
 ## Swagger Documentation
- - [Application URL](http://<hostname>:8003/recipeservice/swagger-ui/) (Prerequisite: The application should be running on port number : 8003)
-![Resource](images/accountresource.png)
+ - [Application URL](http://<hostname>:8004/swagger-ui/) (Prerequisite: The application should be running on port number : 8004)
+![Resource](images/transactionresource.png)
 
 ## Accessing H2 Database
- - [Database URL](http://<hostname>:8003/h2)  (Prerequisite: The application should be running on port number : 8003)
+ - [Database URL](http://<hostname>:8004/h2)  (Prerequisite: The application should be running on port number : 8004)
 
 ## Initial Data
- - On startup application will load initial data. You can Add/Modify existing data in src/main/resources/data.sql
+ - On startup application will load initial data. You can Add/Modify existing data in src/main/resources/data.sql in account service
  - To create current account branch,account type of type current account, customer mapped with branch is mandatory. Initial data has 2 customers with id 1, 2
  
 ## Achieved Functionalities
+   - Transaction service is accessed via account service to save account transaction details and retrieve same.
    - Create New Account and its transaction
    - Get saved Current account by customer id.
    - While creating new current account it will invoke transaction service to store transaction of that account.
    	 If transaction fails/unable to connect transaction service then created account will be deleted.
    - Circuit breaker pattern is applied to the resource
-   - Integration Test using Wiremock (AccountControllerIntegrationTest.java)
+   - Integration Test (TransactionControllerIntegrationTest.java)
    - Unit test 
+   - Created CI/CD pipeline to deploy application in Azure Kubernetes service
+   - Added actuator to monitor application
    - Swagger Documentation
    

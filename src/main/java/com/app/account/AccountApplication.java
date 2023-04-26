@@ -32,6 +32,10 @@ public class AccountApplication {
 		return new RestTemplate();
 	}
 	
+	/**
+	 * Allow swagger documentation access while using actuator
+	 * @return BeanPostProcessor
+	 */
 	@Bean
 	public static BeanPostProcessor springfoxHandlerProviderBeanPostProcessor() {
 	    return new BeanPostProcessor() {
