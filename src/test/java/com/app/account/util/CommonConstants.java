@@ -1,5 +1,9 @@
 package com.app.account.util;
-
+/**
+ * Stored constants used in testing.
+ * @author Anitha Manoharan
+ *
+ */
 public class CommonConstants {
 	public static final String BASE_FILE_PATH = "src/test/resources/";
 	public static final String ACCOUNTTYPE_FILE = "accounttype.json";

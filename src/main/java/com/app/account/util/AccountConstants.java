@@ -2,6 +2,7 @@ package com.app.account.util;
 
 /**
  * This class has all common constants used in this service.
+ * 
  * @author Anitha Manoharan
  *
  */
@@ -18,8 +19,8 @@ public class AccountConstants {
 	public static final String SUCCESS = "Success";
 	public static final String FAILURE = "Failure";
 	public static final String ACCOUNT_CREATED_SUCCESS = "Current account created successfully";
-	public static final String ACCOUNT_EXISTS= "Customer already has current account";
-	public static final String ACCOUNT_NOT_EXISTS= "Customer does not have current account";
+	public static final String ACCOUNT_EXISTS = "Customer already has current account";
+	public static final String ACCOUNT_NOT_EXISTS = "Customer does not have current account";
 	public static final String ACCOUNT_SERVICE = "Account Service";
 	public static final String INPUT_ERROR = "Request body has errors";
 	public static final String ERROR = "Error";

@@ -11,22 +11,27 @@ import com.app.account.util.AccountConstants;
 
 /**
  * This class used to set error response of Transaction.
+ * 
  * @author Anitha Manoharan
  *
  */
 @Component
 public class TransactionErrorResponse {
 	private static final Logger LOGGER = LoggerFactory.getLogger(TransactionErrorResponse.class);
+
 	/**
-	 * Set the error message, status code retrieved from Transaction Service into response model.
-	 * @param message message
+	 * Set the error message, status code retrieved from Transaction Service into
+	 * response model.
+	 * 
+	 * @param message    message
 	 * @param statusCode status code
 	 * @return TransactionResponse
 	 */
 	public static TransactionResponse formErrorMessage(String message, int statusCode) {
 		LOGGER.debug("Inside formErrorMessage method {}", TransactionErrorResponse.class);
 		ErrorMessage errorMessage = TransactionErrorMessage.formErrorMessage(message, statusCode);
-		TransactionResponse errorResponse = TransactionResponse.builder().errorMessage(errorMessage).message(AccountConstants.FAILURE).build();
+		TransactionResponse errorResponse = TransactionResponse.builder().errorMessage(errorMessage)
+				.message(AccountConstants.FAILURE).build();
 		return errorResponse;
 	}
 }

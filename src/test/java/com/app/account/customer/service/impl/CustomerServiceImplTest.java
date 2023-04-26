@@ -18,6 +18,7 @@ import com.app.account.util.CommonUtil;
 
 /**
  * Test CustomerServiceImpl class
+ * 
  * @author Anitha Manoharan
  *
  */
@@ -28,7 +29,7 @@ public class CustomerServiceImplTest {
 	CustomerServiceImpl customerService;
 	@Mock
 	ICustomerRepository customerRepository;
-	
+
 	@DisplayName("Get customer details")
 	@Test
 	public void testRetrieveCustomer() throws Exception {

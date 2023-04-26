@@ -11,6 +11,7 @@ import com.app.account.service.intf.IDeleteAccountService;
 
 /**
  * This class is used to Delete account.
+ * 
  * @author Anitha Manoharan
  *
  */
@@ -19,9 +20,10 @@ public class DeleteAccountServiceImpl implements IDeleteAccountService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DeleteAccountServiceImpl.class);
 	@Autowired
 	IAccountRepository accountRepository;
-	
+
 	/**
 	 * Delete account of given input account.
+	 * 
 	 * @param account Account.
 	 */
 	@Override

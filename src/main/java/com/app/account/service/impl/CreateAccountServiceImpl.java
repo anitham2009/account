@@ -31,11 +31,11 @@ import com.app.account.transaction.service.ICreateTransactionService;
 import com.app.account.util.AccountConstants;
 
 /**
- * This class is used to create the Account of the given customer
- * and its transaction.
- * Check existence of input before doing operation and return success/error response or throw exception
- * based upon the response.
- * Converts entity object to into response model before returning the response.
+ * This class is used to create the Account of the given customer and its
+ * transaction. Check existence of input before doing operation and return
+ * success/error response or throw exception based upon the response. Converts
+ * entity object to into response model before returning the response.
+ * 
  * @author Anitha Manoharan
  *
  */
@@ -45,7 +45,6 @@ public class CreateAccountServiceImpl implements ICreateAccountService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CreateAccountServiceImpl.class);
 	@Autowired
 	ICreateTransactionService createTransactionService;
-
 
 	@Autowired
 	ICustomerService customerService;
@@ -66,18 +65,21 @@ public class CreateAccountServiceImpl implements ICreateAccountService {
 	ISearchAccountService searchAccountService;
 
 	/**
-	 * This method is used to create Current Account and its transaction based upon given input.
-	 * Check given customer existence, if customer not exists then throw exception of type CustomerNotExistsException
-	 * Check Account existence for the given customer of type Current account. If exists then throw exception of type AccountExistsException.
-	 * Retrieve Branch and Account type, Customer information to associate with Account.
-	 * Assume Branch, Account Type are already exists in database as it loads data while server startup.
-	 * Save Account with Branch, Customer, Account Type and balance.
-	 * If initialCredit amount in request is 0 then skip adding transaction.
-	 * else invokes transaction service to create transaction for newly created account.
-	 * If response from transaction service is "Success" then return response with customer id,account number and transaction number.
-	 * If response from transaction service is "Failure" then throw exception of type APIClientException by setting error response return from
-	 * transaction service.
-	 *  
+	 * This method is used to create Current Account and its transaction based upon
+	 * given input. Check given customer existence, if customer not exists then
+	 * throw exception of type CustomerNotExistsException Check Account existence
+	 * for the given customer of type Current account. If exists then throw
+	 * exception of type AccountExistsException. Retrieve Branch and Account type,
+	 * Customer information to associate with Account. Assume Branch, Account Type
+	 * are already exists in database as it loads data while server startup. Save
+	 * Account with Branch, Customer, Account Type and balance. If initialCredit
+	 * amount in request is 0 then skip adding transaction. else invokes transaction
+	 * service to create transaction for newly created account. If response from
+	 * transaction service is "Success" then return response with customer
+	 * id,account number and transaction number. If response from transaction
+	 * service is "Failure" then throw exception of type APIClientException by
+	 * setting error response return from transaction service.
+	 * 
 	 * @param createAccountRequest Create Account Request
 	 * @return CreateAccountResponse
 	 */
@@ -109,14 +111,14 @@ public class CreateAccountServiceImpl implements ICreateAccountService {
 				// Save Account
 				account = accountRepository.saveAndFlush(account);
 				LOGGER.info("Current Account created.");
-				//Check initialCredit amount to save transaction.
+				// Check initialCredit amount to save transaction.
 				if (createAccountRequest.getInitialCredit().longValue() != 0L) {
-					//Save Transaction.
+					// Save Transaction.
 					TransactionResponse transactionResponse = createTransactionService.saveTransaction(account,
 							creditAmount);
-					//Check response message from Transaction Service.
+					// Check response message from Transaction Service.
 					if (transactionResponse.getMessage().equalsIgnoreCase(AccountConstants.SUCCESS)) {
-						 CreateSuccessResponse createSuccessResponse = new CreateSuccessResponse();
+						CreateSuccessResponse createSuccessResponse = new CreateSuccessResponse();
 						response = createSuccessResponse.formSuccessResponse(account,
 								transactionResponse.getTransaction().get(0).getTransactionNumber());
 					} else {
@@ -128,7 +130,7 @@ public class CreateAccountServiceImpl implements ICreateAccountService {
 								transactionResponse.getErrorMessage().getSource());
 					}
 				} else {
-					//Form response message without transaction as initialCredit is 0.
+					// Form response message without transaction as initialCredit is 0.
 					CreateSuccessResponse createSuccessResponse = new CreateSuccessResponse();
 					response = createSuccessResponse.formSuccessResponse(account, AccountConstants.EMPTY_STRING);
 				}
@@ -140,9 +142,10 @@ public class CreateAccountServiceImpl implements ICreateAccountService {
 
 	/**
 	 * 
-	 * Form Account entity object to save in database.
-	 * Create Account number and set it in Account object.
-	 * Set Audit Field values along with Customer, Branch, Account Type info.
+	 * Form Account entity object to save in database. Create Account number and set
+	 * it in Account object. Set Audit Field values along with Customer, Branch,
+	 * Account Type info.
+	 * 
 	 * @param customer
 	 * @param branch
 	 * @param accountType
@@ -152,7 +155,7 @@ public class CreateAccountServiceImpl implements ICreateAccountService {
 	private Account formAccountInput(Customer customer, Branch branch, AccountType accountType,
 			BigDecimal initialCredit) {
 		LOGGER.debug("Inside formAccountInput method {}", this.getClass());
-		
+
 		Account account = Account.builder().accountNumber(AccountNumberUtil.createAccountNumber())
 				.accountStatus(AccountConstants.ACTIVE).branch(branch).accountType(accountType).customer(customer)
 				.balance(initialCredit).createdBy(AccountConstants.SYSTEM).openDate(new Date())

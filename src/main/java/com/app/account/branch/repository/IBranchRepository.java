@@ -5,6 +5,12 @@ import org.springframework.stereotype.Repository;
 
 import com.app.account.entity.Branch;
 
+/**
+ * Repository class of Branch entity.
+ * 
+ * @author Anitha Manoharan
+ *
+ */
 @Repository
 public interface IBranchRepository extends JpaRepository<Branch, Long> {
 

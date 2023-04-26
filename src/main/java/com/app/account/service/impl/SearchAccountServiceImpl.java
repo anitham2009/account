@@ -46,7 +46,8 @@ public class SearchAccountServiceImpl implements ISearchAccountService {
 
 	/**
 	 * Retrieve Account details of the customer for given account type.
-	 * @param typeId Account Type
+	 * 
+	 * @param typeId     Account Type
 	 * @param customerId Customer Id
 	 * @return Account Account
 	 */
@@ -59,15 +60,18 @@ public class SearchAccountServiceImpl implements ISearchAccountService {
 
 	/**
 	 * Retrieve Customer, Account and its transaction detail for the given customer.
-	 * Before get Account details of the customer, check customer availability 
-	 * If customer does not exists then throw exception of type CustomerNotExistsException.
-	 * Get Account details of the given customer by account type "Current Account".
-	 * If account does not exists then throw exception of type AccountNotExistsException.
-	 * If account balance is 0 then skip taking transaction detail and return response.
-	 * If account balance is > 0 then invokes transaction service to get relevant transaction detail.
-	 * If response from transaction service is "Success" then return response with customer,account and transaction detail.
-	 * If response from transaction service is "Failure" then throw exception of type APIClientException by setting error response return from
-	 * transaction service.
+	 * Before get Account details of the customer, check customer availability If
+	 * customer does not exists then throw exception of type
+	 * CustomerNotExistsException. Get Account details of the given customer by
+	 * account type "Current Account". If account does not exists then throw
+	 * exception of type AccountNotExistsException. If account balance is 0 then
+	 * skip taking transaction detail and return response. If account balance is > 0
+	 * then invokes transaction service to get relevant transaction detail. If
+	 * response from transaction service is "Success" then return response with
+	 * customer,account and transaction detail. If response from transaction service
+	 * is "Failure" then throw exception of type APIClientException by setting error
+	 * response return from transaction service.
+	 * 
 	 * @param customerId Customer Id
 	 * @return SearchAccountResponse
 	 * 
@@ -76,30 +80,30 @@ public class SearchAccountServiceImpl implements ISearchAccountService {
 	public SearchAccountResponse getCustomerCurrentAccountDetail(Long customerId) {
 		LOGGER.debug("Inside getCustomerCurrentAccountDetail method {}", this.getClass());
 		SearchAccountResponse response = null;
-		//Get customer details.
+		// Get customer details.
 		Customer customer = customerService.retreiveCustomerById(customerId);
 		if (customer == null) {
 			LOGGER.error("Customer does not exists {}", this.getClass());
 			throw new CustomerNotExistsException(AccountConstants.CUSTOMER_NOT_EXISTS);
 		} else {
-			//Get account type details.
+			// Get account type details.
 			AccountType accountType = accountTypeService.retrieveAccountTypeDetail(AccountConstants.CURRENT_ACCOUNT);
-			//Get account details.
+			// Get account details.
 			Account existingAccount = accountRepository.findAccountByTypeIdAndCustomerId(accountType.getTypeId(),
 					customerId);
 			if (existingAccount == null) {
 				LOGGER.error("Account does not exists {}", this.getClass());
 				throw new AccountNotExistsException(AccountConstants.ACCOUNT_NOT_EXISTS);
 			} else {
-				//Check balance amount in Account.
+				// Check balance amount in Account.
 				if (existingAccount.getBalance().compareTo(BigDecimal.ZERO) > 0) {
 					LOGGER.info("Account has balance amount > 0 {}", this.getClass());
 					TransactionResponse transactionResponse = searchTransactionService
 							.getTransactionDetail(existingAccount.getAccountId());
-					//Check response from Transaction service.
-					if (transactionResponse.getMessage().equalsIgnoreCase(AccountConstants.SUCCESS) ) {
+					// Check response from Transaction service.
+					if (transactionResponse.getMessage().equalsIgnoreCase(AccountConstants.SUCCESS)) {
 						LOGGER.info("Success response from Transaction Service {}", this.getClass());
-						SearchAccountSuccessResponse successResponse = new SearchAccountSuccessResponse(); 
+						SearchAccountSuccessResponse successResponse = new SearchAccountSuccessResponse();
 						response = successResponse.formResponseData(customer, existingAccount,
 								transactionResponse.getTransaction());
 					} else {
@@ -109,9 +113,9 @@ public class SearchAccountServiceImpl implements ISearchAccountService {
 								transactionResponse.getErrorMessage().getSource());
 					}
 				} else {
-					//Account balance is 0.
+					// Account balance is 0.
 					LOGGER.info("Account Balance is 0 {}", this.getClass());
-					SearchAccountSuccessResponse successResponse = new SearchAccountSuccessResponse(); 
+					SearchAccountSuccessResponse successResponse = new SearchAccountSuccessResponse();
 					response = successResponse.formResponseData(customer, existingAccount, null);
 				}
 
@@ -120,8 +124,5 @@ public class SearchAccountServiceImpl implements ISearchAccountService {
 		}
 		return response;
 	}
-	
-	
-	 
-	 
+
 }

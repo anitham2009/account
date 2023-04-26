@@ -18,6 +18,7 @@ import com.app.account.util.CommonUtil;
 
 /**
  * Test BranchServiceImpl class
+ * 
  * @author Anitha Manoharan
  *
  */
@@ -25,18 +26,16 @@ import com.app.account.util.CommonUtil;
 public class BranchServiceImplTest {
 	@Mock
 	IBranchRepository branchRepository;
-	
+
 	@InjectMocks
 	BranchServiceImpl branchService;
-	
 
-	
 	@DisplayName("Get branch details")
 	@Test
 	public void testRetrieveBranch() throws Exception {
 		Branch branch = (Branch) CommonUtil.retrieveObject(CommonConstants.BRANCH_FILE, Branch.class);
 		when(branchRepository.findByIsActive(any())).thenReturn(branch);
-		Branch branchResponse =  branchService.retrieveBranch();
+		Branch branchResponse = branchService.retrieveBranch();
 		assertNotNull(branchResponse.getBranchId());
 		assertNotNull(branchResponse.getBranchAddress());
 		assertNotNull(branchResponse.getBranchName());
@@ -56,10 +55,7 @@ public class BranchServiceImplTest {
 		assertNotNull(branchResponse.getBranchAddress().getUpdatedBy());
 		assertNotNull(branchResponse.getBranchAddress().getUpdatedDate());
 		assertNotNull(branchResponse.getBranchAddress().getPostalCode());
-		
-		
+
 	}
-	
-	
 
 }

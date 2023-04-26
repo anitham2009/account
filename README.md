@@ -68,9 +68,9 @@
   				- ![Resource](images/getaccountdetailsuccess.png)
   				
 ## Monitoring application - Actuator
-	- URL example:
-		- http://20.85.249.179:8004/actuator/health
-		- http://20.84.12.77:8003/actuator/health
+ - URL example
+	- http://20.85.249.179:8004/actuator/health
+	- http://20.84.12.77:8003/actuator/health
 	 		      	
 ## Swagger Documentation
  - [Application URL](http://<hostname>:8004/swagger-ui/) (Prerequisite: The application should be running on port number : 8004)
@@ -89,7 +89,7 @@
    - Get saved Current account by customer id.
    - While creating new current account it will invoke transaction service to store transaction of that account.
    	 If transaction fails/unable to connect transaction service then created account will be deleted.
-   - Circuit breaker pattern is applied to the resource
+   - Circuit breaker pattern is applied to the resource in account service -Minimum number of call is set to 5
    - Integration Test (TransactionControllerIntegrationTest.java)
    - Unit test 
    - Created CI/CD pipeline to deploy application in Azure Kubernetes service

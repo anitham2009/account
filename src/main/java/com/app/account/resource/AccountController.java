@@ -94,6 +94,8 @@ public class AccountController {
                             schema = @Schema(implementation = CreateAccountResponse.class))}),
             @ApiResponse(responseCode = "409", description = "Account Exists Exception",
                     content = @Content),
+            @ApiResponse(responseCode = "503", description = "API Client Exception",
+            content = @Content),
             @ApiResponse(responseCode = "422", description = "API Client Exception",
             content = @Content),
             @ApiResponse(responseCode = "404", description = "Customer Not Exists Exception",
@@ -116,6 +118,22 @@ public class AccountController {
 	 * @return ResponseEntity<SearchAccountResponse>
 	 */
 	@ApiOperation(value = "Get Current Account")
+	@ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = SearchAccountResponse.class))}),
+            @ApiResponse(responseCode = "409", description = "Account Exists Exception",
+                    content = @Content),
+            @ApiResponse(responseCode = "503", description = "API Client Exception",
+            content = @Content),
+            @ApiResponse(responseCode = "422", description = "API Client Exception",
+            content = @Content),
+            @ApiResponse(responseCode = "404", description = "Customer Not Exists Exception",
+            content = @Content),
+            @ApiResponse(responseCode = "404", description = "Account Not Exists Exception",
+            content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error",
+            content = @Content)})
 	@GetMapping(value = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@CircuitBreaker(name = "CircuitBreakerService")
 	public ResponseEntity<SearchAccountResponse> getUserAccountInfo(@ApiParam(example="1") @PathVariable(value="customerId") Long customerId) {

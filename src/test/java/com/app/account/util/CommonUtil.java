@@ -10,9 +10,10 @@ import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CommonUtil {
-	
+
 	/**
 	 * Read json file and converts into object of given class type
+	 * 
 	 * @param <T>
 	 * @param fileName
 	 * @param contentClass
@@ -21,7 +22,7 @@ public class CommonUtil {
 	 * @throws DatabindException
 	 * @throws IOException
 	 */
-	public static <T>  Object retrieveObject(String fileName, Class<T> contentClass)
+	public static <T> Object retrieveObject(String fileName, Class<T> contentClass)
 			throws StreamReadException, DatabindException, IOException {
 		File file = new File(CommonConstants.BASE_FILE_PATH + fileName);
 		ObjectMapper mapper = new ObjectMapper();
@@ -29,6 +30,7 @@ public class CommonUtil {
 		return object;
 
 	}
+
 	/**
 	 * Read json file.
 	 * 

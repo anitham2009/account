@@ -42,7 +42,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @TestPropertySource(value = "classpath:application-test.properties")
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
-@AutoConfigureWireMock(port=8004)
+@AutoConfigureWireMock(port = 8004)
 @TestMethodOrder(OrderAnnotation.class)
 public class AccountControllerIntegrationTest {
 
@@ -147,7 +147,7 @@ public class AccountControllerIntegrationTest {
 		RequestBuilder request = MockMvcRequestBuilders.post(CommonConstants.ACCOUNT_URL)
 				.contentType(MediaType.APPLICATION_JSON).content(inputRequest).accept(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(request).andExpect(status().is5xxServerError()).andReturn();
-		String response  = result.getResponse().getContentAsString();
+		String response = result.getResponse().getContentAsString();
 		ObjectMapper mapper = new ObjectMapper();
 		ErrorResponse errorResponse = mapper.readValue(response, ErrorResponse.class);
 		assertNotNull(errorResponse);
@@ -159,7 +159,7 @@ public class AccountControllerIntegrationTest {
 	public void testErrorTransaction() throws Exception {
 		String inputRequest = CommonUtil.readJSONFile(
 				CommonConstants.BASE_FILE_PATH + CommonConstants.CREATE_ACCOUNT_REQUEST_INITIAL_CREDIT_FILE);
-		
+
 		RequestBuilder request = MockMvcRequestBuilders.get(CommonConstants.GET_ACCOUNT_URL)
 				.contentType(MediaType.APPLICATION_JSON).content(inputRequest).accept(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(request).andExpect(status().is5xxServerError()).andReturn();

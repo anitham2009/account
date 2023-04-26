@@ -7,11 +7,12 @@ import com.app.account.entity.AccountType;
 
 /**
  * This class is used to do database operations of AccountType
+ * 
  * @author Anitha Manoharan
  *
  */
 @Repository
-public interface IAccountTypeRepository extends JpaRepository<AccountType, Long>{
+public interface IAccountTypeRepository extends JpaRepository<AccountType, Long> {
 
 	public AccountType findByTypeAndIsActive(String type, String isActive);
 }
