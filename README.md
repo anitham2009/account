@@ -77,7 +77,7 @@
 ![Resource](images/transactionresource.png)
 
 ## Accessing H2 Database
- - [Database URL](http://<hostname>:8004/h2)  (Prerequisite: The application should be running on port number : 8004)
+ - [Database URL](http://localhost:8004/h2)  (Prerequisite: The application should be running on port number : 8004 and in localhost)
 
 ## Initial Data
  - On startup application will load initial data. You can Add/Modify existing data in src/main/resources/data.sql in account service
