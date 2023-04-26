@@ -57,8 +57,7 @@
 				- ![Resource](images/transactionresource.png)
 			- To check log execute below command 
 				- kubectl get pods
-				- kubectl logs -f <podnameofaccount>
-				- kubectl logs -f <podnameoftransaction>
+				- kubectl logs -f (podnameofaccount/transaction)
 				
 		- Its mandatory to run both account, transaction service to do create/ get operation
   			- Customer Id available are 1 , 2
