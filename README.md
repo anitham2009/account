@@ -74,11 +74,11 @@
 	- http://20.84.12.77:8003/actuator/health
 	 		      	
 ## Swagger Documentation
- - [Application URL](http://<hostname>:8004/swagger-ui/) (Prerequisite: The application should be running on port number : 8004)
+ - [Application URL](http://<hostname>:8004/swagger-ui/) (Prerequisite: The application should be running on port number : 8004, hostname should be EXTERNAL-IP/localhost)
 ![Resource](images/accountresource.png)
 
 ## Accessing H2 Database
- - [Database URL](http://localhost:8004/h2)  (Prerequisite: The application should be running on port number : 8004 and in localhost)
+ - [Database URL](http://localhost:8004/h2)  (Prerequisite: The application should be running on port number : 8004 and can only be accessed in localhost)
 
 ## Initial Data
  - On startup application will load initial data. You can Add/Modify existing data in src/main/resources/data.sql.
