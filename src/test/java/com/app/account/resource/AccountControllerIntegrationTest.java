@@ -79,7 +79,7 @@ public class AccountControllerIntegrationTest {
 		assertNotNull(result.getResponse());
 	}
 
-	@DisplayName("Create Account input whose customer id is not available")
+	@DisplayName("Unavailable customer input")
 	@Test
 	@Order(3)
 	public void testCreateAccountException() throws Exception {
@@ -128,13 +128,11 @@ public class AccountControllerIntegrationTest {
 		String response = CommonUtil
 				.readJSONFile(CommonConstants.BASE_FILE_PATH + CommonConstants.RETRIEVE_TRANSACTION_FILE);
 
-		String inputRequest = CommonUtil.readJSONFile(
-				CommonConstants.BASE_FILE_PATH + CommonConstants.CREATE_ACCOUNT_REQUEST_INITIAL_CREDIT_FILE);
 		stubFor(get(urlEqualTo(CommonConstants.GET_TRANSACTION_URL)).willReturn(aResponse()
 				.withHeader(CommonConstants.CONTENT_TYPE, CommonConstants.APPLICATION_JSON).withBody(response)));
 		Thread.sleep(1000);
 		RequestBuilder request = MockMvcRequestBuilders.get(CommonConstants.GET_ACCOUNT_URL)
-				.contentType(MediaType.APPLICATION_JSON).content(inputRequest).accept(MediaType.APPLICATION_JSON);
+				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(request).andExpect(status().is2xxSuccessful()).andReturn();
 		assertNotNull(result.getResponse());
 	}

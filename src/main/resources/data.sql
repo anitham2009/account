@@ -14,7 +14,3 @@ INSERT INTO branch(branch_name,address_id,is_active)
  INSERT INTO customer(first_name,surname,gender,contact_number,date_of_birth,address_id,is_active)
   VALUES ('Nina','John','F','0678987543','01-10-1986',2,'Y'),
   ('Peter','Paul','M','0698423476','01-10-1990',3,'Y');
-
-INSERT INTO account(account_number,branch_id,type_id,customer_id,account_status)
- VALUES ('NL91 ABCB 12345981833',1,1,1,'Active'),
- ('NL91 ABCB 29876589431',1,1,1,'Active');

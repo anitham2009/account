@@ -21,7 +21,7 @@ public class CommonConstants {
 	public static final String GET_ACCOUNT_URL = "/account/1";
 	public static final String TRANSACTION_RESPONSE_FILE = "transactionresponse.json";
 	public static final String TRANSACTION_URL = "/transaction";
-	public static final String GET_TRANSACTION_URL = "/transaction/3";	
+	public static final String GET_TRANSACTION_URL = "/transaction/1";	
 	public static final String ACCOUNT_FILE = "account.json";
 	public static final String CREATE_ACCOUNT_REQUEST_ZERO_CREDIT_FILE = "createaccountrequestzerocredit.json";
 	public static final String ERROR_TXN_RESPONE_FILE = "errortransactonresponse.json";

@@ -2,9 +2,9 @@
   "message": "Success",
   "transaction": [
     {
-      "transactionId": 3,
+      "transactionId": 1,
       "transactionNumber": "TXNABCA1682247286488831276525",
-      "accountId": 3,
+      "accountId": 1,
       "description": "Initial Credit",
       "transferredAmount": 10,
       "balance": 10,

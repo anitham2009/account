@@ -1,6 +1,6 @@
 # Account Service API overview
-- Account service application is to create new current with initial credit amount and store its transaction based upon initial credit amount, view the stored data.
-- Handled operations : create,get newly created current account. Delete newly current account if relevant accounts transaction fails.
+- Account service application is to create new current account for existing customer using customer id and initial credit amount.
+- Handled operations : Create current account, view current account detail and persist transaction if initial credit is greater than zero.
 - Build and deploy application using CI/CD pipeline in Azure Kubernetes Cluster
 
 ## Technology Stack
@@ -21,7 +21,7 @@
 ## Code Coverage
 ![Code Coverage](images/codecoverage.png)
 
-## Application Running Instructions - Both account service, transaction service
+## Application Running Instructions - Both Account Service & Transaction Service
  
   - How to run application in local
     - mvn clean install
@@ -74,23 +74,23 @@
 	 		      	
 ## Swagger Documentation
  - [Application URL](http://<hostname>:8004/swagger-ui/) (Prerequisite: The application should be running on port number : 8004)
-![Resource](images/transactionresource.png)
+![Resource](images/accountresource.png)
 
 ## Accessing H2 Database
  - [Database URL](http://localhost:8004/h2)  (Prerequisite: The application should be running on port number : 8004 and in localhost)
 
 ## Initial Data
- - On startup application will load initial data. You can Add/Modify existing data in src/main/resources/data.sql in account service
- - To create current account branch,account type of type current account, customer mapped with branch is mandatory. Initial data has 2 customers with id 1, 2
+ - On startup application will load initial data. You can Add/Modify existing data in src/main/resources/data.sql.
+ - Tables branch,  account_type, address and customer are loaded with initial data. Please note that these are mandatory data otherwise application will throw internal server exception.
  
 ## Achieved Functionalities
-   - Transaction service is accessed via account service to save account transaction details and retrieve same.
-   - Create New Account and its transaction
+   - Create new Current Account and its transaction.
+   - Transaction service is accessed from account service to save account transaction details and to retrieve the same.
    - Get saved Current account by customer id.
    - While creating new current account it will invoke transaction service to store transaction of that account.
    	 If transaction fails/unable to connect transaction service then created account will be deleted.
    - Circuit breaker pattern is applied to the resource in account service -Minimum number of call is set to 5
-   - Integration Test (TransactionControllerIntegrationTest.java)
+   - Integration Test (AccountControllerIntegrationTest.java)
    - Unit test 
    - Created CI/CD pipeline to deploy application in Azure Kubernetes service
    - Added actuator to monitor application
