@@ -38,26 +38,27 @@
   		- Create Service connection for Docker registry to push image into registry
   			- Replace with your docker registry name account, transaction service in configuration/azure/account-pipeline.yml , transaction-pipeline.yml in Line No. 21,22
   			- Replace with your docker registry name account, transaction service in configuration/azure/deployment.yaml in Line No. 25
-  		- To Create New Pipeline of transaction service in azure 
-  		     Pipeline -> New Pipeline -> Select GitHub-> select transaction repository-> Select Use Existing Azure Pipeline YAML->select configuration/azure/transaction-pipeline.yml -> Run
+  		- To Create New Pipeline for transaction service in azure 
+  		     - Pipelines -> New Pipeline -> Select GitHub-> select transaction repository-> Select Use Existing Azure Pipeline YAML->select configuration/azure/transaction-pipeline.yml -> Run
   		   		- You can see status of the pipeline
   		    	- ![Resource](images/transactionpipelinesuccess.png)  
-  		- To Create New Pipeline of account service in azure 
-  		     Pipeline -> New Pipeline -> Select GitHub-> select account repository-> Select Use Existing Azure Pipeline YAML->select configuration/azure/account-pipeline.yml -> Run
+  		- To Create New Pipeline for account service in azure 
+  		     - Pipelines -> New Pipeline -> Select GitHub-> select account repository-> Select Use Existing Azure Pipeline YAML->select configuration/azure/account-pipeline.yml -> Run
   		   		- You can see status of the pipeline
   		    	- ![Resource](images/accountpipelinesuccess.png) 
-  		- To get the URL to run the application execute below command in cloud shell/ local if kubectl installed in local
+  		- Execute below command in cloud shell 
   			- kubectl get svc
   				 - ![Resource](images/k8sservice.png)
-  			- Copy the ip address of account service in EXTERNAL-IP and port 8003
+  			- Copy the EXTERNAL-IP of account service and port is 8003
   				- URL sample: http://20.84.12.77:8003/swagger-ui/
   				- ![Resource](images/accountresource.png)
-			- Copy the ip address of account service in EXTERNAL-IP and port 8003
+			- Copy the EXTERNAL-IP of transaction service and port is 8004
 				- URL sample: http://20.85.249.179:8004/swagger-ui/
 				- ![Resource](images/transactionresource.png)
 			- To check log execute below command 
 				- kubectl get pods
-				- kubectl logs -f <podnameofaccount/transaction>
+				- kubectl logs -f <podnameofaccount>
+				- kubectl logs -f <podnameoftransaction>
 				
 		- Its mandatory to run both account, transaction service to do create/ get operation
   			- Customer Id available are 1 , 2
